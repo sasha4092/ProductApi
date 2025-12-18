@@ -4,8 +4,8 @@ namespace ProductApi.Services.Interfaces
 {
     public interface IProductService
     {
-        void AddProduct(ProductInfo request);
-        IEnumerable<ProductInfo> GetProducts();
+        ProductAddResponse AddProduct(ProductInfo request);
+        IEnumerable<ProductListResponse> GetProducts();
         ProductInfoView GetProduct(int id);
     }
 }
