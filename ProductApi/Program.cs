@@ -1,5 +1,9 @@
 using ProductApi.Data;
 using ProductApi.Middleware;
+using ProductApi.Repositories;
+using ProductApi.Repositories.Interfaces;
+using ProductApi.Services;
+using ProductApi.Services.Interfaces;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -10,6 +14,9 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddSingleton<OracleDbContext>();
+builder.Services.AddScoped<IProductRepository, ProductRepository>();
+builder.Services.AddScoped<IProductService, ProductService>();
+
 
 var app = builder.Build();
 

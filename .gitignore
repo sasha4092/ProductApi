@@ -266,6 +266,10 @@ ServiceFabricBackup/
 *.ldf
 *.ndf
 
+# Ignore app settings files
+appsettings.json
+appsettings.Development.json
+
 # Business Intelligence projects
 *.rdl.data
 *.bim.layout

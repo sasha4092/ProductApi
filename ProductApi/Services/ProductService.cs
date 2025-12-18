@@ -14,12 +14,12 @@ namespace ProductApi.Services
             _repo = repo;
         }
 
-        public void AddProduct(ProductInfo request)
+        public ProductAddResponse AddProduct(ProductInfo request)
         {
-            _repo.AddProduct(request);
+            return _repo.AddProduct(request);
         }
 
-        public IEnumerable<ProductInfo> GetProducts()
+        public IEnumerable<ProductListResponse> GetProducts()
         {
             return _repo.GetProducts();
         }

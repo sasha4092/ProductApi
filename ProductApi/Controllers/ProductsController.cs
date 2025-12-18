@@ -20,11 +20,13 @@ namespace ProductApi.Controllers
         [HttpPost]
         public IActionResult AddProduct(ProductInfo request)
         {
-            _service.AddProduct(request);
-            return Ok(new { success = true, message = "Product processed successfully" });
+            return Ok(_service.AddProduct(request));
+      //      return Ok(new { success = true, message = "Product processed successfully" });
+           // return Ok(new { success = true, message = "Product processed successfully" });
+
         }
 
-        [HttpGet]
+        [HttpGet("list")]
         public IActionResult GetProducts()
         {
             return Ok(_service.GetProducts());
