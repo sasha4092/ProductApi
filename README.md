@@ -10,8 +10,9 @@ ASP.NET Core Web API integrated with Oracle database using PL/SQL packages.
 
 ## Setup
 1. Update connection string in `appsettings.json`
-2. Run the API
-3. Test via Swagger or Postman
+2. Open project in Visual Studio
+3. Run the API
+4. Test via Swagger or Postman
 
 ## API Endpoints
 - POST /api/products
