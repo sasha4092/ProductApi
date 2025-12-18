@@ -24,23 +24,10 @@ namespace ProductApi.Repositories
             cmd.CommandText = "product.product_pkg.p_ins_product";
             cmd.CommandType = CommandType.StoredProcedure;
 
-            var param = new OracleParameter
-            {
-                ParameterName = "p_product_info",
-                OracleDbType = OracleDbType.Object,
-                UdtTypeName = "PRODUCT.PRODUCT_OBJ_TAB",
-                Value = new object[]
-                {
-                new object[]
-                {
-                    request.ProductName,
-                    request.ProductTypeNo,
-                    request.ColNo
-                }
-                }
-            };
+            cmd.Parameters.Add("p_product_name", OracleDbType.Varchar2).Value = request.ProductName;
+            cmd.Parameters.Add("p_prod_type_no", OracleDbType.Int32).Value = request.ProductTypeNo;
+            cmd.Parameters.Add("p_col_no", OracleDbType.Int32).Value = request.ColNo;
 
-            cmd.Parameters.Add(param);
             cmd.ExecuteNonQuery();
         }
 
@@ -73,8 +60,8 @@ namespace ProductApi.Repositories
             conn.Open();
 
             using var cmd = conn.CreateCommand();
-            cmd.CommandText = "SELECT product_no, product_name, product_type, colours" +
-            "FROM product.product_info_v" +
+            cmd.CommandText = "SELECT product_no, product_name, product_type, colours " +
+            "FROM product.product_info_v " +
             "WHERE product_no = :id ";
         
             cmd.Parameters.Add(new OracleParameter("id", id));
