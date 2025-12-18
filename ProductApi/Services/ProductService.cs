@@ -14,7 +14,7 @@ namespace ProductApi.Services
             _repo = repo;
         }
 
-        public ProductAddResponse AddProduct(ProductInfo request)
+        public ProductInfoView AddProduct(ProductInfo request)
         {
             return _repo.AddProduct(request);
         }

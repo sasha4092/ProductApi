@@ -4,7 +4,7 @@ namespace ProductApi.Repositories.Interfaces
 {
     public interface IProductRepository
     {
-        ProductAddResponse AddProduct(ProductInfo request);
+        ProductInfoView AddProduct(ProductInfo request);
         IEnumerable<ProductListResponse> GetProducts();
         ProductInfoView GetProductById(int id);
     }

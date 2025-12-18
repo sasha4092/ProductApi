@@ -15,21 +15,50 @@ namespace ProductApi.Repositories
             _db = db;
         }
 
-        public ProductAddResponse AddProduct(ProductInfo request)
+        public ProductInfoView AddProduct(ProductInfo request)
         {
             using var conn = _db.GetConnection();
-            conn.Open();
+            //try
+            //{
+                
+                conn.Open();
 
-            using var cmd = conn.CreateCommand();
-            cmd.CommandText = "product.product_pkg.p_ins_product";
-            cmd.CommandType = CommandType.StoredProcedure;
+                using var cmd = conn.CreateCommand();
+                cmd.CommandText = "product.product_pkg.p_ins_product";
+                cmd.CommandType = CommandType.StoredProcedure;
 
-            cmd.Parameters.Add("p_product_name", OracleDbType.Varchar2).Value = request.ProductName;
-            cmd.Parameters.Add("p_prod_type_no", OracleDbType.Int32).Value = request.ProductTypeNo;
-            cmd.Parameters.Add("p_col_no", OracleDbType.Int32).Value = request.ColNo;
+                cmd.Parameters.Add("p_product_name", OracleDbType.Varchar2).Value = request.ProductName;
+                cmd.Parameters.Add("p_prod_type_no", OracleDbType.Int32).Value = request.ProductTypeNo;
+                cmd.Parameters.Add("p_col_no", OracleDbType.Int32).Value = request.ColNo;
+                var statusParam = cmd.Parameters.Add("o_status", OracleDbType.Int32);
+                statusParam.Direction = ParameterDirection.Output;
 
-            cmd.ExecuteNonQuery();
-            return GetProductByname(request.ProductName);
+                var messageParam = cmd.Parameters.Add("o_message", OracleDbType.Varchar2, 4000);
+                messageParam.Direction = ParameterDirection.Output;
+
+                cmd.ExecuteNonQuery();
+                
+                int status = Convert.ToInt32(statusParam.Value.ToString());
+                string message = messageParam.Value.ToString();
+                if (status == 1)
+                {
+                    return GetProductByname(request.ProductName);
+                }
+                else
+                {
+                    throw new Exception(message);
+                }
+
+            //}
+            //catch(Exception ex)
+            //{
+            //    throw;
+            //}
+            //finally
+            //{
+            //    conn.Close();
+            //}
+            
         }
 
         public IEnumerable<ProductListResponse> GetProducts()
@@ -69,7 +98,7 @@ namespace ProductApi.Repositories
 
             using var reader = cmd.ExecuteReader();
             if (!reader.Read())
-                return null;
+                throw new Exception("product id not found");
 
             return new ProductInfoView
             {
@@ -80,7 +109,7 @@ namespace ProductApi.Repositories
             };
         }
 
-        public ProductAddResponse GetProductByname(string name)
+        public ProductInfoView GetProductByname(string name)
         {
             using var conn = _db.GetConnection();
             conn.Open();
@@ -96,7 +125,7 @@ namespace ProductApi.Repositories
             if (!reader.Read())
                 return null;
 
-            return new ProductAddResponse
+            return new ProductInfoView
             {
                 ProductNo = reader.GetInt32(0),
                 ProductName = reader.GetString(1),

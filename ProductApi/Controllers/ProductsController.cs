@@ -35,6 +35,10 @@ namespace ProductApi.Controllers
         [HttpGet("{id}")]
         public IActionResult GetProduct(int id)
         {
+            if(id==0)
+            {
+
+            }
             var product = _service.GetProduct(id);
             if (product == null)
                 return NotFound();

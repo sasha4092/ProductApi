@@ -22,17 +22,17 @@ namespace ProductApi.Middleware
                 context.Response.StatusCode = 400;
                 await context.Response.WriteAsJsonAsync(new
                 {
-                    success = false,
+                    status = "Failed",
                     message = ex.Message
                 });
             }
-            catch (Exception)
+            catch (Exception ex) 
             {
                 context.Response.StatusCode = 500;
                 await context.Response.WriteAsJsonAsync(new
                 {
-                    success = false,
-                    message = "Internal server error"
+                    status = "Failed",
+                    message = ex.Message
                 });
             }
         }

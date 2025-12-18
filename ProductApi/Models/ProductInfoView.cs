@@ -1,6 +1,6 @@
 ﻿namespace ProductApi.Models
 {
-    public class ProductInfoView
+    public class ProductInfoView1
     {
         public int ProductNo { get; set; }
         public string ProductName { get; set; }
