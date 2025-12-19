@@ -19,7 +19,8 @@ builder.Services.AddScoped<IProductService, ProductService>();
 
 
 var app = builder.Build();
-
+var connectionString = builder.Configuration.GetConnectionString("OracleDb");
+//Console.WriteLine(connectionString);
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
